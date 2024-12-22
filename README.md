@@ -1,6 +1,8 @@
 ![niflveil-logo-complete](https://github.com/user-attachments/assets/74032954-8770-460d-87f0-c2057328197a)# NiflVeil
 Hiding your dirty little secrets since 2024
 
+From the creator of [StygianSift](https://github.com/Mauitron/StygianSift)
+
 
 # NiflVeil
 A minimalistic window minimizer for Hyprland, named after Niflheim's mystical veil of mists where things vanish from sight but remain within reach.
