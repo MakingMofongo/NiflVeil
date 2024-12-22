@@ -38,10 +38,18 @@ Super + I to part the veil and see what lurks beyond
 ## Installation
 
 
-## The Script
+### 1. Download and set up the script:
+```bash
+# Create local bin directory if it doesn't exist
+mkdir -p ~/.local/bin
+```
 
-1. Copy the following scirpt:
+### Create the script file
+```bash
+nano ~/.local/bin/niflveil   # (or use your preferred text editor)
+```
 
+### Copy the following scirpt to the file:
 ```bash
 #!/bin/bash
 
@@ -173,13 +181,24 @@ case "$1" in
         ;;
 esac
 ```
+
+### Make it executable
+```bash
+chmod +x ~/.local/bin/niflveil
+```
+
+### Make sure ~/.local/bin is in your PATH (add this to your .bashrc or .zshrc if needed)
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
 Important: 
 The wofi dependency is only required if you want to use the menu interface.
 The core minimize/restore functionality and waybar integration work independently.
 You can replace wofi with another menu system by modifying the show_menu() function in the script.
 
 
-2. Create the wofi style file:
+### 2. Create the wofi style file:
 ```bash
 mkdir -p ~/.config/wofi
 cat > ~/.config/wofi/style.css << 'EOL'
@@ -228,14 +247,14 @@ window {
 EOL
 ```
 
-3. Add these bindings to your Hyprland config (~/.config/hypr/hyprland.conf):
+### 3. Add these bindings to your Hyprland config (~/.config/hypr/hyprland.conf):
 ```conf
 # NiflVeil bindings
 bind = $mainMod, M, exec, niflveil minimize
 bind = $mainMod, I, exec, niflveil restore
 ```
 
-4. (Optional) Add Waybar integration by adding this to your Waybar config:
+### 4. (Optional) Add Waybar integration by adding this to your Waybar config:
 ```jsonc
 {
     "custom/niflveil": {
