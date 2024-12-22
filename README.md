@@ -184,7 +184,7 @@ esac
 
 ### Make it executable
 ```bash
-chmod +x ~/.local/bin/niflveil
+chmod +x ~/.local/bin/niflveil.sh
 ```
 
 ### Make sure ~/.local/bin is in your PATH (add this to your .bashrc or .zshrc if needed)
