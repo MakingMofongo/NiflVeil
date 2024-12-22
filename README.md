@@ -275,10 +275,6 @@ If you find this tool useful, consider buying me some mead! I could use it in th
 - Nordic theme creators for making me feel more at home in these cold lands
 - That absolute tit Ratatoskr who gave me directions! (I should have known better)
 
-## Name Origin
-
-NiflVeil is named after Niflheim (Old Norse: "Abode of Mists") from Norse mythology, representing how windows are temporarily veiled from view but remain accessible, much like objects hidden in Niflheim's mystical mists.
-
 
 P.S. No refunds, exchanges, or soul-backsies. The exchange rate between Obols and Norse currency is terrible anyway.
 
