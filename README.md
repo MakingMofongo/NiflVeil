@@ -46,12 +46,12 @@ mkdir -p ~/.local/bin
 
 ### Create the script file
 ```bash
-nano ~/.local/bin/niflveil   # (or use your preferred text editor)
+nano ~/.local/bin/niflveil.sh   # (or use your preferred text editor)
 ```
 
 ### Copy the following scirpt to the file:
 ```bash
-#!/bin/bash
+#!/bin/sh
 
 # Core state management
 CACHE_DIR="/tmp/minimize-state"
@@ -259,8 +259,8 @@ bind = $mainMod, I, exec, niflveil restore
 {
     "custom/niflveil": {
         "format": "{}",
-        "exec": "niflveil show",
-        "on-click": "niflveil restore",
+        "exec": "~/.local/bin/niflveil.sh show",
+        "on-click": "~/.local/bin/niflveil.sh restore",
         "return-type": "json",
         "interval": "once",
         "signal": 8
