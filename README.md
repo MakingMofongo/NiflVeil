@@ -30,10 +30,10 @@ Super + I to part the veil and see what lurks beyond
 
 ## 🛠️ Dependencies (A Smith's Requirements)
 
-- hyprland (your vessel through the desktop seas)
-- wofi (optional, because even Vikings need menus)
-- jq (for parsing the runes... I mean, JSON)
-- waybar (optional, but recommended for keeping track of your veiled windows)
+- [hyprland](https://github.com/hyprwm/Hyprland) (your vessel through the desktop seas)
+- [wofi](https://github.com/SimplyCEO/wofi) (optional, because even Vikings need menus)
+- [jq](https://github.com/jqlang/jq) (for parsing the runes... I mean, JSON)
+- [waybar](https://github.com/Alexays/Waybar) (optional, but recommended for keeping track of your veiled windows)
 
 ## Installation
 
