@@ -18,7 +18,7 @@ Greetings, mortals! I am the keeper of the mists, formerly known as that boat gu
 
 ### Core Features
 - **Window Veiling**: Send your windows to Niflheim's mists, retrieve them when needed
-- **Wofi Integration**: To let you peer across the veil
+- **Wofi Integration**: To let you peer across the veil (optional)
 - **Waybar Support**: Keep track of your hidden treasures
 - **Window State Persistence**: Like Yggdrasil's roots, always remembering
 
@@ -31,7 +31,7 @@ Super + I to part the veil and see what lurks beyond
 ## 🛠️ Dependencies (A Smith's Requirements)
 
 - hyprland (your vessel through the desktop seas)
-- wofi (because even Vikings need menus)
+- wofi (optional, because even Vikings need menus)
 - jq (for parsing the runes... I mean, JSON)
 - waybar (optional, but recommended for keeping track of your veiled windows)
 
@@ -173,6 +173,11 @@ case "$1" in
         ;;
 esac
 ```
+Important: 
+The wofi dependency is only required if you want to use the menu interface.
+The core minimize/restore functionality and waybar integration work independently.
+You can replace wofi with another menu system by modifying the show_menu() function in the script.
+
 
 2. Create the wofi style file:
 ```bash
