@@ -1,5 +1,5 @@
-![niflveil-logo-complete](https://github.com/user-attachments/assets/74032954-8770-460d-87f0-c2057328197a)# NiflVeil
-Hiding your dirty little secrets since 2024
+![niflveil-logo-complete](https://github.com/user-attachments/assets/74032954-8770-460d-87f0-c2057328197a)
+# Currently being rewritten in Rust
 
 From the creator of [StygianSift](https://github.com/Mauitron/StygianSift)
 
