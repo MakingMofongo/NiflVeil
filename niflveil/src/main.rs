@@ -1,3 +1,11 @@
+/*
+ * NiflVeil - A window minimizer for Hyprland
+ * Copyright (C) 2024 Maui The Magnificent (Charon)
+ * Contact: Maui_The_Magnificent@proton.me
+ * Project repository: https://github.com/Mauitron/NiflVeil.git
+*/
+
+
 use std::{
     collections::HashMap,
     env,
