@@ -10,7 +10,8 @@
                      :x "78%"
                      :y "56%"
                      :width "15%"
-                     :height "40%")
+                     :height "40%"
+                     :anchor "center")
   :stacking "overlay"
   :windowtype "dialog"
   :focusable false
