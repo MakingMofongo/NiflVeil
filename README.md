@@ -95,7 +95,7 @@ And add this to your Waybar style.css:
 - Press Super + M to minimize the current window
 - Press Super + I to show the restore menu via EWW
 - Press Super + U to restore the most recently minimized window
-- Press Super + Shift + M to restore all minimized windows
+- Press Super + Shift + U to restore all minimized windows
 
 - Click the Waybar module (if configured) to show minimized windows
 
