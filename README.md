@@ -1,266 +1,75 @@
 ![niflveil-logo-complete](https://github.com/user-attachments/assets/74032954-8770-460d-87f0-c2057328197a)
-# Currently being rewritten in Rust
-
-From the creator of [StygianSift](https://github.com/Mauitron/StygianSift)
-
-
+ 
 # NiflVeil
-A minimalistic window minimizer for Hyprland, named after Niflheim's mystical veil of mists where things vanish from sight but remain within reach.
-If you enjoy NiflVeil or want to see more tools from my workshop in Niflheim, consider buying me some [mead](https://buymeacoffee.com/charon0)  🍺
+From the creator of [StygianSift](https://github.com/Mauitron/StygianSift) comes NiflVeil - a minimalistic window minimizer for Hyprland, named after Niflheim's mystical veil of mists where things vanish from sight but remain within reach. If you enjoy NiflVeil or want to see more tools from my workshop in Niflheim, consider buying me some [mead](https://buymeacoffee.com/charon0) 🍺
 
 ## Lost in the Mists? Let this paragon of sanity help you out!
 
-Greetings, mortals! I am the keeper of the mists, formerly known as that boat guy from the warmer realms. After a... slight navigational error involving the world tree and some, exceptionally terrible, advice from an, exceptionally rude, squirl, I've found myself in these frigid Norse lands. But fear not! I've turned my talent for ferrying lost souls into something more useful - helping you manage your lost windows!
+Greetings, mortals! I am the keeper of the mists, formerly known as that boat guy from the warmer realms. After a... slight navigational error involving the world tree and some, exceptionally terrible, advice from an, exceptionally rude, squirrel, I've found myself in these frigid Norse lands. But fear not! I've turned my talent for ferrying lost souls into something more useful - helping you manage your lost windows!
 
 ## 🌫️ Features
 
-![output_optimized](https://github.com/user-attachments/assets/0bf280bf-a41c-460a-8c34-a0b86a5d2dc8)
-
 ### Core Features
-- **Window Veiling**: Send your windows to Niflheim's mists, retrieve them when needed
-- **Wofi Integration**: To let you peer across the veil (optional)
-- **Waybar Support**: Keep track of your hidden treasures
-- **Window State Persistence**: Like Yggdrasil's roots, always remembering
 
-### Minimizing Magic
-```bash
-Super + M to send window to the mists
-Super + I to part the veil and see what lurks beyond
-```
+- Window Veiling: Send your windows to Niflheim's mists, retrieve them when needed
+- EWW Integration: To let you peer across the veil with style
+- Waybar Support: Keep track of your hidden treasures
+- Window State Persistence: Like Yggdrasil's roots, always remembering
+- Window Previews: Capture the essence of your windows before they fade into the mists *(Currently under development)*
 
-## 🛠️ Dependencies (A Smith's Requirements)
 
-- [hyprland](https://github.com/hyprwm/Hyprland) (your vessel through the desktop seas)
-- [wofi](https://github.com/SimplyCEO/wofi) (optional, because even Vikings need menus)
-- [jq](https://github.com/jqlang/jq) (for parsing the runes... I mean, JSON)
-- [waybar](https://github.com/Alexays/Waybar) (optional, but recommended for keeping track of your veiled windows)
+## 🛠️ Dependencies
+
+- hyprland (your vessel through the desktop seas)
+- eww (optional, but required for the restore menu interface)
+- waybar (optional, but recommended for keeping track of your veiled windows)
 
 ## Installation
 
+### 1. Building from source
 
-### 1. Download and set up the script:
 ```bash
-# Create local bin directory if it doesn't exist
-mkdir -p ~/.local/bin
+# Clone the repository
+git clone https://github.com/Mauitron/NiflVeil.git
+cd NiflVeil
+
+# Build using cargo
+cargo build --release
+
+# Copy the binary to your path
+sudo cp target/release/niflveil /usr/local/bin/
+
+# Create required directory
+mkdir -p /tmp/minimize-state
 ```
 
-### Create the script file
+### 2. Add the bindings you want bindings to your Hyprland config:
+
 ```bash
-nano ~/.local/bin/niflveil.sh   # (or use your preferred text editor)
-```
+# Suggested NiflVeil bindings
 
-### Copy the following scirpt to the file:
-```bash
-#!/bin/sh
+# Minimize current window and updates the interface
+bind = $mainMod, M, exec, /etc/niflveil.sh minimize && eww reload --config /etc/xdg/eww/widgets/niflveil
 
-# Core state management
-CACHE_DIR="/tmp/minimize-state"
-CACHE_FILE="$CACHE_DIR/minimized_windows.json"
-
-# Ensure cache directory exists
-mkdir -p "$CACHE_DIR"
-
-# Initialize cache file if it doesn't exist
-if [ ! -f "$CACHE_FILE" ] || ! jq empty "$CACHE_FILE" 2>/dev/null; then
-    echo '[]' > "$CACHE_FILE"
-fi
-
-minimize() {
-    window_info=$(hyprctl activewindow -j)
-    if [ $? -eq 0 ] && [ -n "$window_info" ] && [ "$(echo "$window_info" | jq -r '.class')" != "null" ]; then
-        class_name=$(echo "$window_info" | jq -r '.class')
-        
-        # Don't minimize wofi
-        if [ "$class_name" = "wofi" ]; then
-            exit 1
-        fi
-        
-        window_title=$(echo "$window_info" | jq -r '.title')
-        window_addr=$(echo "$window_info" | jq -r '.address')
-        short_addr=$(echo "$window_addr" | tail -c 5)
-        
-        # Create window info object
-        window_info=$(echo "$window_info" | jq --arg title "$class_name - $window_title [$short_addr]" \
-            '{address: .address, display_title: $title, class: .class, original_title: .title}')
-        
-        # Move window to special workspace
-        if hyprctl dispatch movetoworkspacesilent special:minimum,address:$window_addr; then
-            # Update cache file
-            if [ -s "$CACHE_FILE" ]; then
-                echo "$window_info" | jq -s ". + $(cat "$CACHE_FILE")" > "$CACHE_FILE.tmp"
-            else
-                echo "$window_info" | jq -s > "$CACHE_FILE.tmp"
-            fi
-            mv "$CACHE_FILE.tmp" "$CACHE_FILE"
-            
-            # Signal waybar if you're using it
-            pkill -RTMIN+8 waybar 2>/dev/null || true
-        fi
-    fi
-}
-
-restore() {
-    window_id="$1"
-    if [ -n "$window_id" ]; then
-        current_ws=$(hyprctl activeworkspace -j | jq -r '.id')
-        
-        if hyprctl clients -j | jq -e ".[] | select(.address == \"$window_id\")" >/dev/null; then
-            # Move window to current workspace and focus it
-            if hyprctl dispatch movetoworkspace "$current_ws,address:$window_id"; then
-                hyprctl dispatch focuswindow "address:$window_id"
-                
-                # Update cache file
-                jq "map(select(.address != \"$window_id\"))" "$CACHE_FILE" > "$CACHE_FILE.tmp"
-                mv "$CACHE_FILE.tmp" "$CACHE_FILE"
-                
-                # Signal waybar if you're using it
-                pkill -RTMIN+8 waybar 2>/dev/null || true
-            fi
-        else
-            # Clean up if window no longer exists
-            jq "map(select(.address != \"$window_id\"))" "$CACHE_FILE" > "$CACHE_FILE.tmp"
-            mv "$CACHE_FILE.tmp" "$CACHE_FILE"
-            pkill -RTMIN+8 waybar 2>/dev/null || true
-        fi
-    fi
-}
-
-show_menu() {
-    if [ ! -s "$CACHE_FILE" ]; then
-        echo "No minimized windows"
-        exit 0
-    fi
-
-    # Create menu content
-    menu_content=$(jq -r '.[].display_title' "$CACHE_FILE")
-    
-    # Show wofi menu
-    selected=$(echo -e "$menu_content" | wofi \
-        --show dmenu \
-        --prompt "Minimized Windows" \
-        --width 800 \
-        --height 400 \
-        --cache-file /dev/null \
-        --style "$HOME/.config/wofi/style.css" \
-        --hide-scroll \
-        --define search_triggered=false \
-        --define early_exit=true \
-        --define immediate_activation=true \
-        --define single_click=true)
-    
-    if [ -n "$selected" ]; then
-        window_id=$(jq -r --arg title "$selected" '.[] | select(.display_title == $title) | .address' "$CACHE_FILE")
-        if [ -n "$window_id" ]; then
-            restore "$window_id"
-        fi
-    fi
-}
-
-case "$1" in
-    "minimize")
-        minimize
-        ;;
-    "restore")
-        if [ -n "$2" ]; then
-            restore "$2"
-        else
-            show_menu
-        fi
-        ;;
-    "show")
-        if [ -s "$CACHE_FILE" ]; then
-            count=$(jq length "$CACHE_FILE")
-            echo "{\"text\":\"󰖰 $count\",\"class\":\"has-windows\",\"tooltip\":\"$count minimized windows\"}"
-        else
-            echo "{\"text\":\"󰖰\",\"class\":\"empty\",\"tooltip\":\"No minimized windows\"}"
-        fi
-        ;;
-    *)
-        echo "Usage: $0 {minimize|restore [window_id]|show}"
-        exit 1
-        ;;
-esac
-```
-
-### Make it executable
-```bash
-chmod +x ~/.local/bin/niflveil.sh
-```
-
-### Make sure ~/.local/bin is in your PATH (add this to your .bashrc or .zshrc if needed)
-```bash
-export PATH="$HOME/.local/bin:$PATH"
-```
-
-Important: 
-The wofi dependency is only required if you want to use the menu interface.
-The core minimize/restore functionality and waybar integration work independently.
-You can replace wofi with another menu system by modifying the show_menu() function in the script.
-
-
-### 2. Create the wofi style file:
-```bash
-mkdir -p ~/.config/wofi
-cat > ~/.config/wofi/style.css << 'EOL'
-window {
-    background-color: #2e3440;
-    border: 2px solid #4c566a;
-    border-radius: 8px;
-}
-
-#input {
-    border: none;
-    background: #3b4252;
-    border-radius: 4px;
-    margin: 8px;
-    padding: 8px;
-    color: #eceff4;
-    font-family: "JetBrainsMono Nerd Font";
-}
-
-#outer-box {
-    margin: 0;
-    border: none;
-}
-
-#inner-box {
-    margin: 4px;
-    border: none;
-}
-
-#entry {
-    padding: 8px;
-    margin: 4px;
-    border-radius: 4px;
-    background: #3b4252;
-}
-
-#entry:selected {
-    background: #4c566a;
-    border: 1px solid #88c0d0;
-}
-
-#text {
-    color: #eceff4;
-    font-family: "JetBrainsMono Nerd Font";
-}
-EOL
-```
-
-### 3. Add these bindings to your Hyprland config (~/.config/hypr/hyprland.conf):
-```conf
-# NiflVeil bindings
-bind = $mainMod, M, exec, niflveil minimize
+# Opens the EWW interface              
 bind = $mainMod, I, exec, niflveil restore
+
+# Restore the last minimized window
+bind = SUPER, U, exec, niflveil restore-last && eww reload --config /etc/xdg/eww/widgets/niflveil
+
+# Restore all minimized windows 
+bind = $mainMod SHIFT, U, exec, niflveil restore-all && eww reload --config /etc/xdg/eww/widgets/niflveil
+
 ```
 
-### 4. (Optional) Add Waybar integration by adding this to your Waybar config:
-```jsonc
+### 3. (Optional) Add Waybar integration by adding this to your Waybar config:
+
+```json
 {
     "custom/niflveil": {
         "format": "{}",
-        "exec": "~/.local/bin/niflveil.sh show",
-        "on-click": "~/.local/bin/niflveil.sh restore",
+        "exec": "niflveil show",
+        "on-click": "niflveil restore",
         "return-type": "json",
         "interval": "once",
         "signal": 8
@@ -269,6 +78,7 @@ bind = $mainMod, I, exec, niflveil restore
 ```
 
 And add this to your Waybar style.css:
+
 ```css
 #custom-niflveil {
     padding: 0 10px;
@@ -282,10 +92,25 @@ And add this to your Waybar style.css:
 
 ## Usage
 
-- Press `Super + M` to minimize the current window
-- Press `Super + I` to show the restore menu
+- Press Super + M to minimize the current window
+- Press Super + I to show the restore menu via EWW
+- Press Super + U to restore the most recently minimized window
+- Press Super + Shift + M to restore all minimized windows
+
 - Click the Waybar module (if configured) to show minimized windows
 
+## Command Line Interface
+
+```bash
+niflveil [COMMAND] [WINDOW_ID]
+
+Commands:
+  minimize              Minimize the active window
+  restore [window_id]   Restore a specific window or show restore menu
+  restore-all          Restore all minimized windows
+  restore-last         Restore the most recently minimized window
+  show                 Display status for waybar integration
+```
 
 ## Why Trust Your Windows to a Lost Ferryman?
 
@@ -301,7 +126,12 @@ If you find this tool useful, consider buying me some mead! I could use it in th
 - Nordic theme creators for making me feel more at home in these cold lands
 - That absolute tit Ratatoskr who gave me directions! (I should have known better)
 
-
 P.S. No refunds, exchanges, or soul-backsies. The exchange rate between Obols and Norse currency is terrible anyway.
 
 P.P.S. If you see a confused-looking boat anywhere in the world tree, please let me know. I'm starting to... yearn for it.
+
+
+
+
+
+ 
