@@ -38,9 +38,6 @@ cargo build --release
 
 # Copy the binary to your path
 sudo cp target/release/niflveil /usr/local/bin/
-
-# Create required directory
-mkdir -p /tmp/minimize-state
 ```
 
 ### 2. Add the bindings you want to your Hyprland config:
