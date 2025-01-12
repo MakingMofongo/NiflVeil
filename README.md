@@ -43,7 +43,7 @@ sudo cp target/release/niflveil /usr/local/bin/
 mkdir -p /tmp/minimize-state
 ```
 
-### 2. Add the bindings you want bindings to your Hyprland config:
+### 2. Add the bindings you want to your Hyprland config:
 
 ```bash
 # Suggested NiflVeil bindings
