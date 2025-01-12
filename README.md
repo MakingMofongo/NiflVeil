@@ -107,9 +107,9 @@ niflveil [COMMAND] [WINDOW_ID]
 Commands:
   minimize              Minimize the active window
   restore [window_id]   Restore a specific window or show restore menu
-  restore-all          Restore all minimized windows
-  restore-last         Restore the most recently minimized window
-  show                 Display status for waybar integration
+  restore-all           Restore all minimized windows
+  restore-last          Restore the most recently minimized window
+  show                  Display status for waybar integration
 ```
 
 ## Why Trust Your Windows to a Lost Ferryman?
