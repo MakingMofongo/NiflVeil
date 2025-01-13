@@ -1,7 +1,5 @@
 ![niflveil-logo-complete](https://github.com/user-attachments/assets/74032954-8770-460d-87f0-c2057328197a)
-# IMPORTANT: NiflVeil should build and work as intended. I am unable to test at the moment as i have somehow
-# screwed up cargo on my computer. This notice will be here until i get it running or people has started to
-& comfirm that it is working.
+# IMPORTANT: NiflVeil should build and work as intended. I am unable to test at the moment as i have somehow screwed up cargo on my computer. This notice will be here until i get it running or people has started to comfirm that it is working.
 
 # NiflVeil
 From the creator of [StygianSift](https://github.com/Mauitron/StygianSift) comes NiflVeil - a minimalistic window minimizer for Hyprland, named after Niflheim's mystical veil of mists where things vanish from sight but remain within reach. If you enjoy NiflVeil or want to see more tools from my workshop in Niflheim, consider buying me some [mead](https://buymeacoffee.com/charon0) 🍺
