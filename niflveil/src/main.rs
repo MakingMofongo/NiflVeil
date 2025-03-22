@@ -369,7 +369,7 @@ fn main() -> io::Result<()> {
         "restore-last" => {
             if let Ok(content) = fs::read_to_string(CACHE_FILE) {
                 if let Ok(windows) = parse_windows_from_json(&content) {
-                    if let Some(window) = windows.first() {
+                    if let Some(window) = windows.last() {
                         restore_window(Some(&window.address))?;
                     }
                 }
