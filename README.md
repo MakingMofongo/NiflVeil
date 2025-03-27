@@ -45,7 +45,8 @@ sudo cp target/release/niflveil /usr/local/bin/
 
 ```bash
 # Suggested NiflVeil bindings
-# PS: If you are using the EWW window, add this at the end of the bindings "&& eww reload --config /etc/xdg/eww/widgets/niflveil"
+# PS: If you are using the EWW window, add the following to the end
+# of the bindings: "&& eww reload --config /etc/xdg/eww/widgets/niflveil"
 
 # Minimize current window and updates the interface
 bind = $mainMod, M, exec, /usr/local/bin/niflveil minimize
