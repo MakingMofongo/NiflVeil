@@ -1,5 +1,5 @@
 ![niflveil-logo-complete](https://github.com/user-attachments/assets/74032954-8770-460d-87f0-c2057328197a)
-# IMPORTANT: The eww interface is optional, I haven't improved upon the UI (might be buggy) as I don't use it myself. It is for more ergonomic to use the keybindings.
+# IMPORTANT: The eww interface is optional, I haven't improved upon the UI (might be buggy) as I don't use it myself. It is far more ergonomic to use the keybindings.
 
 # NiflVeil
 From the creator of [StygianSift](https://github.com/Mauitron/StygianSift) comes NiflVeil - a minimalistic window minimizer for Hyprland, named after Niflheim's mystical veil of mists where things vanish from sight but remain within reach. If you enjoy NiflVeil or want to see more tools from my workshop in Niflheim, consider buying me some [mead](https://buymeacoffee.com/charon0) 🍺
