@@ -1,5 +1,5 @@
 [package]
-name = "NiflVeil"
+name = "niflveil"
 version = "0.1.0"
 edition = "2021"
 authors = ["Maui_The_Magnificent"]
