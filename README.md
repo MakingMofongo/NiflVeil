@@ -32,7 +32,7 @@ Greetings, mortals! I am the keeper of the mists, formerly known as that boat gu
 ```bash
 # Clone the repository
 git clone https://github.com/Mauitron/NiflVeil.git
-cd Niflveil/niflveil
+cd NiflVeil/niflveil
 
 # Build using cargo
 cargo build --release
