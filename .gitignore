@@ -1,0 +1,7 @@
+# Rust build artifacts
+niflveil/target/
+niflveil/Cargo.lock
+
+# IDE files
+.vscode/
+.idea/
